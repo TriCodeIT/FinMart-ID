@@ -54,9 +54,7 @@ const Login = () => {
                       Register Form
                     </Link>
                   </div>
-
                 </div>
-
               </div>
             </div>
           </div>
