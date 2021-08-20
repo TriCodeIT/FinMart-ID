@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [Name, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
+  const [PasswordHash, setPassword] = useState("");
 
   const changeUsername = (e) => {
     const value = e.target.value;
@@ -21,6 +22,18 @@ const Register = () => {
     setPassword(value);
   };
 
+  const clickRegister = () => {
+    const data = {
+      name: Name,
+      email: Email,
+      password: PasswordHash
+    };
+    axios.post('http://0.tcp.ap.ngrok.io:13656/api/v1/users', data)
+    .then(result => {
+      console.log(result);
+    })
+  };
+
   return (
     <div style={{ marginTop: "150px" }}>
       <div className="container">
@@ -34,39 +47,36 @@ const Register = () => {
                     type="text"
                     placeholder="Username"
                     className="form-control"
-                    value={username}
+                    value={Name}
                     onChange={changeUsername}
                   />
                 </div>
-
                 <div className="form-group">
                   <label>Email</label>
                   <input
                     type="text"
                     placeholder="Email"
                     className="form-control"
-                    value={email}
+                    value={Email}
                     onChange={changeEmail}
                   />
                 </div>
-
                 <div className="form-group">
                   <label>Password</label>
                   <input
                     type="password"
                     placeholder="Password"
                     className="form-control"
-                    value={password}
+                    value={PasswordHash}
                     onChange={changePassword}
                   />
                 </div>
-
-                <button className="btn btn-primary">Register</button>{' '}
-
+                <button className="btn btn-primary" onClick={clickRegister}>
+                  Register
+                </button>{" "}
                 <Link to="/" className="btn btn-warning">
                   Cancel
                 </Link>
-
               </div>
             </div>
           </div>
