@@ -6,6 +6,7 @@ const Register = () => {
   const [Name, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [PasswordHash, setPassword] = useState("");
+  const [alert, setAlert] = useState("")
 
   const changeUsername = (e) => {
     const value = e.target.value;
@@ -30,7 +31,17 @@ const Register = () => {
     };
     axios.post('http://0.tcp.ap.ngrok.io:13656/api/v1/users', data)
     .then(result => {
-      console.log(result);
+      if(result) {
+        if(result.data) {
+          setUsername('')
+          setEmail('')
+          setPassword('')
+          setAlert(result.data.meta.message)
+          setTimeout(() => {
+            setAlert('')
+          }, 3000)
+        }
+      }
     })
   };
 
@@ -41,6 +52,13 @@ const Register = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
+                {
+                  alert && (
+                    <div className="alert alert-primary">
+                      <p>{alert}</p>
+                    </div>
+                  )
+                }
                 <div className="form-group">
                   <label>Username</label>
                   <input
