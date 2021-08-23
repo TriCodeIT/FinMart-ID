@@ -5,31 +5,35 @@ import axios from "axios";
 const Register = () => {
   const [Name, setUsername] = useState("");
   const [Email, setEmail] = useState("");
-  const [PasswordHash, setPassword] = useState("");
+  const [Password, setPassword] = useState("");
   const [alert, setAlert] = useState("")
+  const [error, setError] = useState("")
 
   const changeUsername = (e) => {
     const value = e.target.value;
-    setUsername(value);
+    setUsername(value)
+    setError('')
   };
 
   const changeEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
+    setError('')
   };
 
   const changePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
+    setError('')
   };
 
   const clickRegister = () => {
     const data = {
       name: Name,
       email: Email,
-      password: PasswordHash
+      password: Password
     };
-    axios.post('http://0.tcp.ap.ngrok.io:13656/api/v1/users', data)
+    axios.post('http://0.tcp.ap.ngrok.io:18952/api/v1/users', data)
     .then(result => {
       if(result) {
         if(result.data) {
@@ -43,6 +47,9 @@ const Register = () => {
         }
       }
     })
+    .catch(e => {
+      setError(e.response.data.meta.message);
+    })
   };
 
   return (
@@ -52,6 +59,16 @@ const Register = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
+                
+                {
+                  error && (
+                    <div className="alert alert-danger">
+                      <p>{error}</p>
+                    </div>
+                  )
+                }
+
+
                 {
                   alert && (
                     <div className="alert alert-primary">
@@ -85,7 +102,7 @@ const Register = () => {
                     type="password"
                     placeholder="Password"
                     className="form-control"
-                    value={PasswordHash}
+                    value={Password}
                     onChange={changePassword}
                   />
                 </div>
