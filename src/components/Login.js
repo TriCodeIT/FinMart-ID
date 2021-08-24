@@ -34,7 +34,7 @@ const Login = () => {
         }
       })
       .catch((e) => {
-        setError(e.response.data.meta.message); //Untuk Validasi Register Form Return dari BackEnd
+        setError(e.response.data.meta.message); //Untuk Validasi Register Form Return dari BackEnd Server
       });
   };
 
