@@ -43,12 +43,12 @@ const Register = () => {
           setAlert(result.data.meta.message)
           setTimeout(() => {
             setAlert('')
-          }, 3000)
+          },3000)
         }
       }
     })
     .catch(e => {
-      setError(e.response.data.meta.message);
+      setError(e.response.data.meta.message); //Untuk Validasi Register Form Return dari BackEnd
     })
   };
 
